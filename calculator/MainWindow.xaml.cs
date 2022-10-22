@@ -83,6 +83,7 @@ public partial class MainWindow : Window
         private bool start = false;
         float result;
         Operation getValue = new Operation();
+        bool pointOn = false;
         
         public MainWindow()
         {
@@ -247,7 +248,16 @@ public partial class MainWindow : Window
 
         private void clickPoint(object sender, RoutedEventArgs e)
         {
-
+            if(pointOn == false)
+            {
+                numDisplay.Text = getDisplayValue() + ".";
+                pointOn = true;
+            }
+            else
+            {
+                numDisplay.Text =  getDisplayValue().Substring(0, getDisplayValue().Length - 1);
+                pointOn = false;
+            }
         }
 
         private void operatingAndDisplayValue(string stringOperator)
