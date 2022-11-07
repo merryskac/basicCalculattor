@@ -22,12 +22,12 @@ namespace calculator
         public Operation(){
             
         }
-        private int Add(int num1, int num2)
+        private float Add(float num1, float num2)
         {      
             return num1+num2;
 
         }
-        private float Div (int num1, int num2)
+        private float Div (float num1, float num2)
         {
             if(num2 == 0)
             {
@@ -35,20 +35,20 @@ namespace calculator
             }
             return num1 / num2;
         }
-        private float Mod(int num1, int num2)
+        private float Mod(float num1, float num2)
         {
             return num1 % num2;
         }
-        private float Multiplication(int num1, int num2)
+        private float Multiplication(float num1, float num2)
         {
             return num1 * num2;
         }
-        private float Substraction(int num1, int num2)
+        private float Substraction(float num1, float num2)
         {
             return num1 - num2;
         }
 
-        public float getResult(string op, int num1, int num2)
+        public float getResult(string op, float num1, float num2)
         {
             if (op == "Add")
             {
@@ -77,8 +77,6 @@ namespace calculator
 public partial class MainWindow : Window
     {
         private string operation;
-        private string operationHappened;
-        private string firstNum;
         private bool buttonOperationOn = false;
         private bool start = false;
         float result;
@@ -176,8 +174,16 @@ public partial class MainWindow : Window
             {
                 numDisplay.Text = "";
             }
-            numDisplay.Text = getDisplayValue() + "0";
-            buttonOperationOn = false;
+            if (getDisplayValue() == "0")
+            {
+                numDisplay.Text = "0";
+            }
+            else
+            {
+                numDisplay.Text = getDisplayValue() + "0";
+                buttonOperationOn = false;
+            }
+            
         }
 
         private void clickClear(object sender, RoutedEventArgs e)
@@ -232,7 +238,7 @@ public partial class MainWindow : Window
 
         private void clickEquals(object sender, RoutedEventArgs e)
         {
-            result = getValue.getResult(operation, (int)result, int.Parse(getDisplayValue()));
+            result = getValue.getResult(operation, (float)result, float.Parse(getDisplayValue()));
             numDisplay.Text = result.ToString();
             start = false;
         }
@@ -266,21 +272,20 @@ public partial class MainWindow : Window
             if (start == false)
             {
                 operation = stringOperator;
-                result = int.Parse(numDisplay.Text);
+                result = float.Parse(numDisplay.Text);
     }
             else
             {
-                result = getValue.getResult(operation, (int) result, int.Parse(getDisplayValue()));
+                result = getValue.getResult(operation, (float)result, int.Parse(getDisplayValue()));
             }
             numDisplay.Text = result.ToString();
             start = true;
             operation = stringOperator;
 
             tesResult.Text = result.ToString();
-            tesstart.Text = start.ToString();
+            tesstart.Text = "start"+start.ToString();
 
             testOperation.Text = operation;
-            testOperation_Copy.Text = operationHappened;
         }
     }
 }
